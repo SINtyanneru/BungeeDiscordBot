@@ -2,6 +2,7 @@ package su.rumishistem.bungeediscordbot;
 
 import net.md_5.bungee.api.config.ServerInfo;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
+import net.md_5.bungee.api.event.ChatEvent;
 import net.md_5.bungee.api.event.PlayerDisconnectEvent;
 import net.md_5.bungee.api.event.PostLoginEvent;
 import net.md_5.bungee.api.event.ServerSwitchEvent;
@@ -41,6 +42,22 @@ public class BungeeEvent implements Listener{
 			Text = Text.replace("$FROM", ResolveServerName(From.getName()).replace("@", "[@]"));
 			Text = Text.replace("$TO", ResolveServerName(To.getName()).replace("@", "[@]"));
 
+			DiscordBot.SendMessage(Text);
+		}
+	}
+
+	@EventHandler
+	public void onChat(ChatEvent e) {
+		if (!(e.getSender() instanceof ProxiedPlayer)) return;
+
+		ProxiedPlayer Player = (ProxiedPlayer) e.getSender();
+		String Name = Player.getDisplayName().replace("@", "[@]");
+		String Message = e.getMessage().replace("@", "[@]");
+
+		if (!e.isCommand()) {
+			String Text = BungeeDiscordBot.CONFIG_DATA.get("MESSAGE").getData("GAME_CHAT").asString();
+			Text = Text.replace("$NAME", Name);
+			Text = Text.replace("$TEXT", Message);
 			DiscordBot.SendMessage(Text);
 		}
 	}
