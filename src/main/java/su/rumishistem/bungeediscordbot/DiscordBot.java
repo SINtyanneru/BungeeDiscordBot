@@ -18,7 +18,8 @@ public class DiscordBot {
 		JDABuilder Builder = JDABuilder.createDefault(BungeeDiscordBot.CONFIG_DATA.get("DISCORD").getData("TOKEN").asString());
 		Builder.enableIntents(
 			GatewayIntent.GUILD_MESSAGES,
-			GatewayIntent.GUILD_MEMBERS
+			GatewayIntent.GUILD_MEMBERS,
+			GatewayIntent.MESSAGE_CONTENT
 		);
 		
 		Builder.setRawEventsEnabled(true);
