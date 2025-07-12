@@ -1,0 +1,2 @@
+# BungeeDiscordBot
+Bungeecord用のDiscordBOTプラグインです！
