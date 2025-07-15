@@ -1,8 +1,6 @@
 package su.rumishistem.bungeediscordbot;
 
-import net.dv8tion.jda.api.JDA;
-import net.dv8tion.jda.api.JDABuilder;
-import net.dv8tion.jda.api.OnlineStatus;
+import net.dv8tion.jda.api.*;
 import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
@@ -10,8 +8,10 @@ import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.utils.MemberCachePolicy;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
+import su.rumishistem.rumi_java_lib.ArrayNode;
 
 public class DiscordBot {
+	private static ArrayNode MessageConfig = BungeeDiscordBot.CONFIG_DATA.get("MESSAGE");
 	public static JDA Bot = null;
 	
 	public static void Init() throws InterruptedException {
@@ -30,11 +30,11 @@ public class DiscordBot {
 				if (e.getAuthor().isBot()) return;
 				if (!BungeeDiscordBot.CONFIG_DATA.get("DISCORD").getData("CHANNEL").asString().contains(e.getChannel().getId())) return;
 
-				String Text = BungeeDiscordBot.CONFIG_DATA.get("MESSAGE").getData("DISCORD_MESSAGE").asString();
-				Text = Text.replace("$SERVER", e.getGuild().getName());
-				Text = Text.replace("$CHANNEL", e.getChannel().getName());
-				Text = Text.replace("$NAME", e.getAuthor().getEffectiveName());
-				Text = Text.replace("$TEXT", e.getMessage().getContentRaw());
+				String Text = MessageConfig.getData("DISCORD_MESSAGE").asString()
+					.replace("$SERVER", e.getGuild().getName())
+					.replace("$CHANNEL", e.getChannel().getName())
+					.replace("$NAME", e.getAuthor().getEffectiveName())
+					.replace("$TEXT", e.getMessage().getContentRaw());
 
 				for (ProxiedPlayer Player:ProxyServer.getInstance().getPlayers()) {
 					Player.sendMessage(Text);
