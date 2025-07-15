@@ -14,8 +14,8 @@ public class BungeeEvent implements Listener{
 	public void onPlayerLogin(PostLoginEvent e) {
 		ProxiedPlayer Player = e.getPlayer();
 
-		String Text = MessageConfig.getData("JOIN").asString();
-		Text = Text.replace("$NAME", Player.getDisplayName().replace("@", "[@]"));
+		String Text = MessageConfig.getData("JOIN").asString()
+			.replace("$NAME", Player.getDisplayName().replace("@", "[@]"));
 
 		DiscordBot.SendMessage(Text);
 	}
@@ -24,8 +24,8 @@ public class BungeeEvent implements Listener{
 	public void onPlayerDisconnect(PlayerDisconnectEvent e) {
 		ProxiedPlayer Player = e.getPlayer();
 
-		String Text = MessageConfig.getData("LEFT").asString();
-		Text = Text.replace("$NAME", Player.getDisplayName().replace("@", "[@]"));
+		String Text = MessageConfig.getData("LEFT").asString()
+			.replace("$NAME", Player.getDisplayName().replace("@", "[@]"));
 
 		DiscordBot.SendMessage(Text);
 	}
@@ -37,10 +37,10 @@ public class BungeeEvent implements Listener{
 		ServerInfo To = Player.getServer().getInfo();
 
 		if (From != null && !From.getName().equals(To.getName())) {
-			String Text = MessageConfig.getData("SWITCH").asString();
-			Text = Text.replace("$NAME", Player.getDisplayName().replace("@", "[@]"));
-			Text = Text.replace("$FROM", ResolveServerName(From.getName()).replace("@", "[@]"));
-			Text = Text.replace("$TO", ResolveServerName(To.getName()).replace("@", "[@]"));
+			String Text = MessageConfig.getData("SWITCH").asString()
+				.replace("$NAME", Player.getDisplayName().replace("@", "[@]"))
+				.replace("$FROM", ResolveServerName(From.getName()).replace("@", "[@]"))
+				.replace("$TO", ResolveServerName(To.getName()).replace("@", "[@]"));
 
 			DiscordBot.SendMessage(Text);
 		}
@@ -55,9 +55,9 @@ public class BungeeEvent implements Listener{
 		String Message = e.getMessage().replace("@", "[@]");
 
 		if (!e.isCommand()) {
-			String Text = MessageConfig.getData("GAME_CHAT").asString();
-			Text = Text.replace("$NAME", Name);
-			Text = Text.replace("$TEXT", Message);
+			String Text = MessageConfig.getData("GAME_CHAT").asString()
+				.replace("$NAME", Name)
+				.replace("$TEXT", Message);
 			DiscordBot.SendMessage(Text);
 		}
 	}
